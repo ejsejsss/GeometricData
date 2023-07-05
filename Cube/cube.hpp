@@ -5,7 +5,6 @@
 
 class Cube : public Object3D {
 public:
-//    explicit Cube(std::string name, std::vector<Face> faces);
 
     explicit Cube(std::string name);
 
