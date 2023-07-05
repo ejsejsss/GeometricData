@@ -4,6 +4,7 @@
 #include <fstream>
 #include "cube.hpp"
 #include "Parallelepiped.hpp"
+#include "Pyramid.hpp"
 
 void menu();
 
@@ -12,6 +13,8 @@ std::string read_file(std::ifstream &in);
 void cube(std::ifstream &in);
 
 void parallelepiped(std::ifstream &in);
+
+void pyramid(std::ifstream &in);
 
 void check_case(int, std::ifstream &in);
 
@@ -59,6 +62,9 @@ void check_case(int num, std::ifstream &in) {
         case 1:
             cube(in);
             break;
+        case 2:
+            pyramid(in);
+            break;
         case 3:
             parallelepiped(in);
             break;
@@ -105,6 +111,19 @@ void parallelepiped(std::ifstream &in) {
         i++;
         if (i == 4 || i == 8) std::cout << std::endl;
     }
+    std::cout << "Объем - " << p.volume() << std::endl;
+    std::cout << "Площадь - " << p.area() << std::endl;
+}
+
+void pyramid(std::ifstream &in) {
+    auto name = read_file(in);
+    Pyramid p(std::move(name));
+    in >> p;
+
+    for(auto i = 0; i < p.getVertexes().size() - 1; i++) {
+        std::cout << p.getVertexes().at(i) << ' ';
+    }
+    std::cout << std::endl << p.getVertexes().back() << std::endl;
     std::cout << "Объем - " << p.volume() << std::endl;
     std::cout << "Площадь - " << p.area() << std::endl;
 }

@@ -9,12 +9,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 add_subdirectory(3DGeometry)
 add_subdirectory(Cube)
 add_subdirectory(Parallelepiped)
+add_subdirectory(Pyramid)
 
-include_directories(3DGeometry Cube Parallelepiped)
+include_directories(3DGeometry Cube Parallelepiped Pyramid)
 
 add_executable(geometric_data main.cpp)
 
-target_link_libraries(geometric_data geometry_lib cube_lib parallelepiped_lib)
+target_link_libraries(geometric_data geometry_lib cube_lib parallelepiped_lib pyramid_lib)
 
 file(COPY ${CMAKE_SOURCE_DIR}/test_data
         DESTINATION ${CMAKE_SOURCE_DIR}/bin/)
