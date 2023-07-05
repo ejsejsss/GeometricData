@@ -31,7 +31,10 @@
 *.out
 *.app
 
-/*cmake*
+lib/
+bin/
+cmake*/
+.idea/
 
 CMakeLists.txt.user
 CMakeCache.txt
