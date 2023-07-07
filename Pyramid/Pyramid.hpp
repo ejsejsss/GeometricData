@@ -12,7 +12,5 @@ public:
 
     friend std::istream &operator>>(std::istream &in, Pyramid &p);
 
-private:
-    double _tetrahedronVolume(const Vertex& p1, const Vertex& p2, const Vertex& p3, const Vertex& p4);
 };
 
