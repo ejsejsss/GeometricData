@@ -8,7 +8,7 @@
 #include "IVolume.hpp"
 #include "vertex.hpp"
 
-class Object3D : IArea, IVolume {
+class Object3D : public IArea, public IVolume {
 private:
     std::string name;
     std::vector<Vertex> vertixes;
@@ -31,7 +31,7 @@ public:
         this->vertixes.push_back(v);
     }
 
-    inline const std::vector<Vertex> getVertexes() {
+    inline const std::vector<Vertex>& getVertexes() {
         return this->vertixes;
     }
 };
