@@ -10,12 +10,13 @@ add_subdirectory(3DGeometry)
 add_subdirectory(Cube)
 add_subdirectory(Parallelepiped)
 add_subdirectory(Pyramid)
+add_subdirectory(TruncatedPyramid)
 
-include_directories(3DGeometry Cube Parallelepiped Pyramid)
+include_directories(3DGeometry Cube Parallelepiped Pyramid TruncatedPyramid)
 
-add_executable(geometric_data main.cpp)
+add_executable(geometric_data main.cpp )
 
-target_link_libraries(geometric_data geometry_lib cube_lib parallelepiped_lib pyramid_lib)
+target_link_libraries(geometric_data geometry_lib cube_lib parallelepiped_lib pyramid_lib trunc_pyramid_lib)
 
 file(COPY ${CMAKE_SOURCE_DIR}/test_data
         DESTINATION ${CMAKE_SOURCE_DIR}/bin/)
