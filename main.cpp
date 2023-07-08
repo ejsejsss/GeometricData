@@ -1,22 +1,22 @@
-#include <iostream>
-#include <utility>
+//#include <iostream>
+//#include <utility>
 #include <vector>
 #include <fstream>
 #include "cube.hpp"
 #include "Parallelepiped.hpp"
 #include "Pyramid.hpp"
+#include "TruncatedPyramid.hpp"
+#include "Prism.hpp"
 
 void menu();
-
 std::string read_file(std::ifstream &in);
-
 void cube(std::ifstream &in);
-
 void parallelepiped(std::ifstream &in);
-
 void pyramid(std::ifstream &in);
-
+void truncated_pyramid(std::ifstream &in);
+void prism(std::ifstream &in);
 void check_case(int, std::ifstream &in);
+void object_data(Object3D &obj);
 
 int main() {
     int num_menu(0);
@@ -32,10 +32,10 @@ int main() {
             std::cout << "----------------------" << std::endl;
             in.close();
         }
-        catch(const std::string& error_msg) {
+        catch (const std::string &error_msg) {
             std::cerr << "Ошибка: " << error_msg << std::endl;
         }
-        catch (const std::ifstream::failure& e) {
+        catch (const std::ifstream::failure &e) {
             std::cerr << "Ошибка открытия/чтения файла: " << e.what() << std::endl;
         }
         catch (const std::exception &ex) {
@@ -68,10 +68,16 @@ void check_case(int num, std::ifstream &in) {
         case 3:
             parallelepiped(in);
             break;
+        case 4:
+            prism(in);
+            break;
+        case 5:
+            truncated_pyramid(in);
+            break;
         case 6:
             exit(EXIT_SUCCESS);
         default:
-            throw std::string("Неправильный выбор меню");
+            throw std::string("Неправильный выбор пункта меню");
     }
 }
 
@@ -83,47 +89,45 @@ std::string read_file(std::ifstream &in) {
     return path;
 }
 
-void cube(std::ifstream &in) {
-    auto name = read_file(in);
-    Cube cube(std::move(name));
-    in >> cube;
-
+void object_data(Object3D &obj) {
+    std::cout << "3D объект " << obj.getName() << std::endl;
     std::cout << "Вершины: " << std::endl;
     int i = 0;
-    for (auto v: cube.getVertexes()) {
-        std::cout << v << ' ';
+    for (auto v: obj.getVertexes()) {
+        std::cout << '(' << v << ") ";
         i++;
-        if (i == 4 || i == 8) std::cout << std::endl;
+        if (i % 4 == 0) std::cout << std::endl;
     }
-    std::cout << "Объем - " << cube.volume() << std::endl;
-    std::cout << "Площадь - " << cube.area() << std::endl;
+    std::cout << std::endl << "Объем - " << obj.volume() << std::endl;
+    std::cout << "Площадь - " << obj.area() << std::endl;
+}
+
+void cube(std::ifstream &in) {
+    Cube cube(std::move(read_file(in)));
+    in >> cube;
+    object_data(cube);
 }
 
 void parallelepiped(std::ifstream &in) {
-    auto name = read_file(in);
-    Parallelepiped p(std::move(name));
+    Parallelepiped p(std::move(read_file(in)));
     in >> p;
-
-    std::cout << "Вершины: " << std::endl;
-    int i = 0;
-    for (auto v: p.getVertexes()) {
-        std::cout << v << ' ';
-        i++;
-        if (i == 4 || i == 8) std::cout << std::endl;
-    }
-    std::cout << "Объем - " << p.volume() << std::endl;
-    std::cout << "Площадь - " << p.area() << std::endl;
+    object_data(p);
 }
 
 void pyramid(std::ifstream &in) {
-    auto name = read_file(in);
-    Pyramid p(std::move(name));
+    Pyramid p(std::move(read_file(in)));
     in >> p;
+    object_data(p);
+}
 
-    for(auto i = 0; i < p.getVertexes().size() - 1; i++) {
-        std::cout << p.getVertexes().at(i) << ' ';
-    }
-    std::cout << std::endl << p.getVertexes().back() << std::endl;
-    std::cout << "Объем - " << p.volume() << std::endl;
-    std::cout << "Площадь - " << p.area() << std::endl;
+void truncated_pyramid(std::ifstream &in) {
+    TruncatedPyramid p(std::move(read_file(in)));
+    in >> p;
+    object_data(p);
+}
+
+void prism(std::ifstream &in) {
+    Prism p(std::move(read_file(in)));
+    in >> p;
+    object_data(p);
 }
